@@ -1,3 +1,4 @@
+async  = require('async')
 Worker = require('redisworker')
 
 
