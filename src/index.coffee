@@ -17,7 +17,7 @@ class MailWorker extends Worker
       cb(err)
 
   pushJob: (jobDict, cb) ->
-    @mailBuilder.buildMail 
+    @mailBuilder.buildMail
       mailFrom: jobDict.mailFrom
       mailTo: jobDict.mailTo
       mailSubject: jobDict.mailSubject
