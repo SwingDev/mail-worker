@@ -18,7 +18,6 @@
     "adapter"
   ],
   "dependencies": {
-    "async": "^0.9.0",
     "redisworker": "git+ssh://git@bitbucket.org:swingdev/redisworker.git"
   },
   "devDependencies": {

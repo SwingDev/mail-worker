@@ -1,4 +1,3 @@
-async  = require('async')
 Worker = require('redisworker')
 
 
@@ -24,22 +23,14 @@ class MailWorker extends Worker
       mailSubject: jobDict.mailSubject
       mailTpl: jobDict.mailTpl
       mailData: jobDict.mailData
-    , (err, mailFrom, mailTo, mimeBody) ->
+    , (err, mailFrom, mailTo, mimeBody) =>
       return cb(err) if err
       jobDict = {}
       jobDict =
         sender: mailFrom
         recipients: mailTo
         mimeBody: mimeBody
-      payload = JSON.stringify(jobDict)
-      async.series([
-        (callback) => @obtainListClient (err,client) =>
-          return callback(err) if err
-          client.rpush(@listKey(), payload, callback)
-        (callback) => @obtainListClient (err,client) =>
-          return callback(err) if err
-          client.publish(@channelKey(), payload, callback)
-      ], (err) -> cb(err))
+      super(jobDict, cb)
 
   error: (err, cb) ->
     console.log '[Error]', err if err
