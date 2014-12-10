@@ -1,4 +1,4 @@
-Worker = require('redisworker')
+Worker = require('redis-worker')
 
 
 class MailWorker extends Worker
@@ -6,7 +6,7 @@ class MailWorker extends Worker
   constructor: (options) ->
     {@url, @mailAdapter, @mailBuilder} = options
     throw new Error('You must use MailWorker with MailAdapter') unless @mailAdapter
-    throw new Error('You must use MailBuilder with MailAdapter') unless @mailBuilder
+    throw new Error('You must use MailWorker with MailBuilder') unless @mailBuilder
 
   name: () ->
     'MailWorker'
