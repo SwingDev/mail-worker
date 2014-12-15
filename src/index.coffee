@@ -32,14 +32,14 @@ class MailWorker extends Worker
         mimeBody: mimeBody
       super(jobDict, cb)
 
-  error: (err, cb) ->
+  error: (err, task, cb) ->
     console.log '[Error]', err if err
     cb()
     return
 
 
 class MailAdapter
-  
+
   constructor: () ->
     return
 
