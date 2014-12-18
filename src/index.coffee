@@ -1,4 +1,8 @@
-Worker = require('redis-worker')
+Worker = require('redis-worker').Worker
+errors = require('./errors')
+
+createError = errors.createError
+MailWorkerError = errors.MailWorkerError
 
 
 class MailWorker extends Worker
@@ -14,7 +18,7 @@ class MailWorker extends Worker
   work: (payload, cb) ->
     mail = JSON.parse(payload)
     @mailAdapter.sendMail mail.sender, mail.recipients, mail.mimeBody, (err) ->
-      cb(err)
+      cb createError(err, 'SENDMAIL')
 
   pushJob: (jobDict, cb) ->
     @mailBuilder.buildMail
@@ -24,7 +28,7 @@ class MailWorker extends Worker
       mailTpl: jobDict.mailTpl
       mailData: jobDict.mailData
     , (err, mailFrom, mailTo, mimeBody) =>
-      return cb(err) if err
+      return cb createError(err, 'BUILDMAIL') if err
       jobDict = {}
       jobDict =
         sender: mailFrom
@@ -33,9 +37,7 @@ class MailWorker extends Worker
       super(jobDict, cb)
 
   error: (err, task, cb) ->
-    console.log '[Error]', err if err
-    cb()
-    return
+    cb(err)
 
 
 class MailAdapter
@@ -50,5 +52,8 @@ class MailAdapter
     throw new Error('You must overwrite buildMail#MailAdapter in subclass')
 
 
+### ###
+# EXPORTS
 exports.MailAdapter = MailAdapter
 exports.MailWorker = MailWorker
+exports.MailWorkerError = MailWorkerError
