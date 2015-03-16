@@ -1,4 +1,4 @@
-ErrorHandler = require('error-handler')
+ErrorHandler = require.main.require('error-handler')
 WorkerError = require('redis-worker').WorkerError
 
 errCodes = ['SENDMAIL', 'BUILDMAIL']
