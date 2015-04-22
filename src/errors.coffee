@@ -4,7 +4,7 @@ WorkerError = require('redis-worker').WorkerError
 errCodes = ['SENDMAIL', 'BUILDMAIL']
 
 createError = (err, errCode) ->
-  return null unless err
+  return null unless err or errCode
 
   if errCode
     switch errCode
@@ -13,7 +13,7 @@ createError = (err, errCode) ->
       when 'BUILDMAIL'
         return new MailWorkerError('Building mail was unsuccessful', err)
       else
-        return new MailWorkerError(null, err)
+        return new MailWorkerError(errCode, err)
   else
     return new MailWorkerError(null, err)
 
