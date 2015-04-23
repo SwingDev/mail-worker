@@ -4,7 +4,7 @@ WorkerError = require('redis-worker').WorkerError
 errCodes = ['SENDMAIL', 'BUILDMAIL']
 
 createError = (err, errCode) ->
-  return null unless err or errCode
+  return null unless err
 
   if errCode
     switch errCode

@@ -19,7 +19,8 @@ class MailWorker extends Worker
   work: (payload, cb) ->
     mail = JSON.parse(payload)
     @mailAdapter.sendMail mail.sender, mail.recipients, mail.mimeBody, (err) ->
-      cb createError(err, 'SENDMAIL')
+      return cb createError(err, 'SENDMAIL') if err
+      cb null
 
   pushJob: (jobDict, cb) ->
     @mailBuilder.buildMail
