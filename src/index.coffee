@@ -8,10 +8,10 @@ MailWorkerError = errors.MailWorkerError
 class MailWorker extends Worker
 
   constructor: (options) ->
-    {@url, @mailAdapter, @mailBuilder, @taskLimit} = options
+    {@url, @taskLimit, @retryTasks, @mailAdapter, @mailBuilder} = options
     throw new Error('You must use MailWorker with MailAdapter') unless @mailAdapter
     throw new Error('You must use MailWorker with MailBuilder') unless @mailBuilder
-    super(@url, @taskLimit)
+    super url: @url, taskLimit: @taskLimit, retryTasks: @retryTasks
 
   name: () ->
     'MailWorker'
