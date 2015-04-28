@@ -29,6 +29,7 @@ class MailWorker extends Worker
       mailSubject: jobDict.mailSubject
       mailTpl: jobDict.mailTpl
       mailData: jobDict.mailData
+      mailHeaders: jobDict.mailHeaders
     , (err, mailFrom, mailTo, mimeBody) =>
       return cb createError(err, 'BUILDMAIL') if err
       jobDict = {}
