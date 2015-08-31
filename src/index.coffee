@@ -26,6 +26,8 @@ class MailWorker extends Worker
     @mailBuilder.buildMail
       mailFrom: jobDict.mailFrom
       mailTo: jobDict.mailTo
+      mailCC: jobDict.mailCC
+      mailBCC: jobDict.mailBCC
       mailSubject: jobDict.mailSubject
       mailTpl: jobDict.mailTpl
       mailData: jobDict.mailData
